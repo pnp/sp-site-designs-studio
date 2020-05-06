@@ -1,0 +1,131 @@
+@import "~office-ui-fabric-react/dist/sass/References.scss";
+@import "../../../styling/theme.scss";
+
+.Adder {
+    transform: translateY(10px);
+
+    .button {
+        width: 100%;
+        height: 0;
+        border: 0;
+        outline-width: 0;
+        padding: 0;
+        padding-top: 1px;
+        background-color: $ms-neutralTertiaryAlt;
+        text-align: center;
+        border-collapse: collapse;
+        opacity: 1;
+        transition: 0.3s ease-in-out;
+
+        &:active,
+        &:focus {
+            outline: 0px;
+        }
+
+        &:hover,
+        &.isSelecting {
+            background-color: $ms-themePrimary;
+            .plusIcon {
+                background-color: $ms-themePrimary;
+                color: $ms-white;
+            }
+        }
+
+        .plusIcon {
+            position: relative;
+            font-size: 14px;
+            height: 23px;
+            left: 46%;
+            -webkit-transform: translate(-50%);
+            transform: translate(-50%);
+            line-height: 23px;
+            width: 23px;
+            text-align: center;
+            border-radius: 50%;
+            cursor: pointer;
+            transform: translateY(-11px);
+            background-color: $ms-neutralTertiaryAlt;
+            color: $ms-neutralPrimary;
+            opacity: 1;
+            transition: 0.3s ease-in-out;
+        }
+    }
+}
+
+// That should be outside because will be part of callout control which is not included at the same location but in the body somewhere else
+.itemsList {
+    width: 350px;
+    min-height: 280px;
+    max-height: 300px;
+    overflow: auto;
+    @include ms-Grid-row;
+
+    .groupHeader {
+        padding: 5px;
+        padding-left: 15px;
+        font-weight: bold;
+        background-color: $ms-neutralTertiaryAlt;
+    }
+
+    .groupContent {
+        header {
+            margin-bottom: 5px;
+        }
+        .item {
+            cursor: pointer;
+            height: 90px;
+            @include ms-Grid-col;
+            @include ms-sm4;
+            font-size: 11px;
+            text-align: center;
+            padding: 14px;
+            padding-bottom: 28px;
+            .label {
+                line-height: 14px;
+            }
+
+            &:hover {
+                .label {
+                    label {
+                        color: $ms-white;
+                    }
+                }
+
+                color: $ms-white;
+                background-color: $ms-primaryBackground;
+            }
+        }
+    }
+}
+
+.row {
+    @include ms-Grid-row;
+
+    .fullWidth {
+        @include ms-Grid-col;
+        @include ms-sm12;
+    }
+    .column1 {
+        @include ms-Grid-col;
+        @include ms-sm1;
+    }
+    .column9 {
+        @include ms-Grid-col;
+        @include ms-sm9;
+    }
+    .column10 {
+        @include ms-Grid-col;
+        @include ms-sm10;
+    }
+}
+
+.iconSearch {
+    display: inline-block;
+    
+    [data-icon-name="Search"] {
+        position: relative;
+        top: 10px;
+        left: 10px;
+        margin-right: 10px;
+    }
+}

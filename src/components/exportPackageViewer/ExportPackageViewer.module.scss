@@ -1,0 +1,48 @@
+@import "~office-ui-fabric-react/dist/sass/References.scss";
+@import "../../styling/theme.scss";
+
+.ExportPackageViewer {
+  .row {
+    @include ms-Grid-row;
+  }
+
+  .columnLayout {
+    @include ms-Grid-col;
+    @include ms-sm12;
+  }
+
+  .column {
+    @include ms-Grid-col;
+    @include ms-sm12;
+  }
+  .column2 {
+    @include ms-Grid-col;
+    @include ms-lg2;
+  }
+  .column10 {
+    @include ms-Grid-col;
+    @include ms-lg10;
+  }
+  .column11 {
+    @include ms-Grid-col;
+    @include ms-lg11;
+  }
+
+  .column8 {
+    @include ms-Grid-col;
+    @include ms-sm12;
+    @include ms-lg8;
+  }
+
+  .half {
+    @include ms-Grid-col;
+    @include ms-sm12;
+    @include ms-lg8;
+    @include ms-lg6;
+  }
+  
+  .filesList {
+    list-style-type: none;
+    padding-left: 1px;
+  }
+}

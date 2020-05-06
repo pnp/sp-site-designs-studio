@@ -1,0 +1,90 @@
+@import "~office-ui-fabric-react/dist/sass/References.scss";
+@import "../../styling/theme.scss";
+
+.row {
+  @include ms-Grid-row;
+}
+
+.columnLayout {
+  @include ms-Grid-col;
+  @include ms-sm12;
+}
+
+.column {
+  @include ms-Grid-col;
+  @include ms-sm12;
+}
+.column1 {
+  @include ms-Grid-col;
+  @include ms-lg1;
+}
+.column10 {
+  @include ms-Grid-col;
+  @include ms-lg10;
+}
+.column11 {
+  @include ms-Grid-col;
+  @include ms-lg11;
+}
+
+.column8 {
+  @include ms-Grid-col;
+  @include ms-sm12;
+  @include ms-lg8;
+}
+
+.half {
+  @include ms-Grid-col;
+  @include ms-sm12;
+  @include ms-lg8;
+  @include ms-lg6;
+}
+
+.selectedSiteScript {
+  h4 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  border: 1px solid darkgray;
+  padding: 15px;
+  padding-top: 3px;
+  padding-bottom: 8px;
+  margin-bottom: 3px;
+}
+
+.siteDesignImage {
+  @include ms-Grid-col;
+  @include ms-sm12;
+  @include ms-lg4;
+  @include ms-xl6;
+
+  .imgPlaceholder {
+    .noImage {
+      background-color: lightgray;
+      border: 1px solid darkgray;
+    }
+  }
+}
+
+.righted {
+  text-align: right;
+}
+
+.column4 {
+  @include ms-Grid-col;
+  @include ms-sm12;
+  @include ms-lg4;
+}
+
+.column6 {
+  @include ms-Grid-col;
+  @include ms-sm12;
+  @include ms-lg6;
+}
+
+.column2 {
+  @include ms-Grid-col;
+  @include ms-sm12;
+  @include ms-lg2;
+}

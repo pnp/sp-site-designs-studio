@@ -1,0 +1,57 @@
+@import "~office-ui-fabric-react/dist/sass/References.scss";
+@import "../../styling/theme.scss";
+
+.SiteDesignsList {
+  .row {
+    @include ms-Grid-row;
+  }
+
+  .column {
+    @include ms-Grid-col;
+    @include ms-sm12;
+  }
+
+  .column8 {
+    @include ms-Grid-col;
+    @include ms-lg8;
+  }
+
+  .column4 {
+    @include ms-Grid-col;
+    @include ms-lg4;
+  }
+
+  .add {
+    .iconBox {
+      padding-top: 63px;
+      padding-bottom: 62px;
+    }
+
+    &:hover {
+      .iconBox {
+        .icon {
+          color: $ms-primaryBackground;
+        }
+      }
+    }
+  }
+
+  .iconBox {
+    -ms-flex-align: center;
+    -ms-grid-row-align: center;
+    align-items: center;
+    color: #666666;
+    background-color: #f4f4f4;
+    padding: 40px;
+    padding-bottom: 30px;
+
+    .icon {
+      text-align: center;
+      font-size: 42px;
+    }
+  }
+
+  .seeMore {
+    font-size: smaller;
+  }
+}

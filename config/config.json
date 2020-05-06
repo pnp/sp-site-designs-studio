@@ -1,0 +1,19 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "site-designs-studio": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/siteDesignsStudio/SiteDesignsStudioWebPart.js",
+          "manifest": "./src/webparts/siteDesignsStudio/SiteDesignsStudioWebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "SiteDesignsStudioWebPartStrings": "lib/webparts/siteDesignsStudio/loc/{locale}.js",
+    "ControlStrings": "node_modules/@pnp/spfx-controls-react/lib/loc/{locale}.js"
+  }
+}

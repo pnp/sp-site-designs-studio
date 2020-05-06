@@ -1,0 +1,22 @@
+@import "~office-ui-fabric-react/dist/sass/References.scss";
+@import "../../../styling/theme.scss";
+
+// .SitePicker {
+
+// }
+
+// .sitePickerSuggestion {
+
+// }
+
+.siteSquare {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    color: $ms-white;
+    align-items: center;
+    background-color: $ms-themePrimary;
+    padding: 8px;
+    margin: 3px;
+    margin-right: 6px;
+}

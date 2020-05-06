@@ -1,0 +1,95 @@
+<pnp:Provisioning xmlns:pnp="http://schemas.dev.office.com/PnP/2020/02/ProvisioningSchema" Author="Yannick Plenevaux" Generator="Manual" Version="1.0" Description="A Tenant template to install Site Designs Studio V2 solution" DisplayName="Site Designs Studio V2" ImagePreviewUrl="">
+    <pnp:Preferences Author="Yannick Plenevaux (yannick.plenevaux@pvx-solutions.com)" Version="1.0" Generator="Manual">
+        <pnp:Parameters>
+            <pnp:Parameter Key="TenantName">contoso</pnp:Parameter>
+            <pnp:Parameter Key="SitePath">SiteDesignsStudio</pnp:Parameter>
+            <pnp:Parameter Key="lcid">1033</pnp:Parameter>
+            <pnp:Parameter Key="TenantId"></pnp:Parameter>
+        </pnp:Parameters>
+    </pnp:Preferences>
+    <pnp:Tenant>
+        <pnp:AppCatalog>
+            <pnp:Package Src="package\site-designs-studio-v2.sppkg" Action="UploadAndPublish" SkipFeatureDeployment="true" Overwrite="true"/>
+        </pnp:AppCatalog>
+        <pnp:WebApiPermissions>
+            <pnp:WebApiPermission Resource="Microsoft.Graph" Scope="Directory.AccessAsUser.All"/>
+        </pnp:WebApiPermissions>
+    </pnp:Tenant>
+    <pnp:Templates ID="SITE-DESIGNS-STUDIO-V2-TEMPLATES">
+        <pnp:ProvisioningTemplate ID="SITE-DESIGNS-STUDIO-V2-APP" Version="1.0" BaseSiteTemplate="SITEPAGEPUBLISHING#0" DisplayName="Site Designs Studio V2" Description="This is a special site hosting the Site Designs Studio V2" Scope="RootSite" TemplateCultureInfo="1033">
+            <pnp:WebSettings WelcomePage="SitePages/sds2.aspx" CommentsOnSitePagesDisabled="true"/>
+            <pnp:Navigation AddNewPagesToNavigation="false" CreateFriendlyUrlsForNewPages="true">
+                <pnp:GlobalNavigation NavigationType="Structural">
+                    <pnp:StructuralNavigation RemoveExistingNodes="true">
+                        <pnp:NavigationNode Title="Site Designs Studio" Url="{site}"/>
+                    </pnp:StructuralNavigation>
+                </pnp:GlobalNavigation>
+                <pnp:CurrentNavigation NavigationType="StructuralLocal">
+                    <pnp:StructuralNavigation RemoveExistingNodes="true">
+                        <pnp:NavigationNode Title="Site Designs Studio" Url="{site}"/>
+                    </pnp:StructuralNavigation>
+                </pnp:CurrentNavigation>
+            </pnp:Navigation>
+            <pnp:Lists>
+                <pnp:ListInstance Title="Site Design - Preview Images" Description="A library to store the Site Designs preview images" DocumentTemplate="{site}/SiteDesignPreviewImages/Forms/template.dotx" TemplateType="101" Url="SiteDesignPreviewImages" EnableVersioning="true" MinorVersionLimit="0" MaxVersionLimit="500" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-e717-4e80-aa17-d0c71b360101" EnableAttachments="false" DefaultDisplayFormUrl="{site}/SiteDesignPreviewImages/Forms/DispForm.aspx" DefaultEditFormUrl="{site}/SiteDesignPreviewImages/Forms/EditForm.aspx" DefaultNewFormUrl="{site}/SiteDesignPreviewImages/Forms/Upload.aspx" ImageUrl="/_layouts/15/images/itdl.png?rev=47" IrmExpire="false" IrmReject="false" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
+                    <pnp:ContentTypeBindings>
+                        <pnp:ContentTypeBinding ContentTypeID="0x0101" Default="true"/>
+                        <pnp:ContentTypeBinding ContentTypeID="0x0120"/>
+                    </pnp:ContentTypeBindings>
+                    <pnp:Views>
+                        <View Name="{B3AA1E1E-3435-4E14-BC40-F56EA0F6FB2B}" DefaultView="TRUE" MobileView="TRUE" MobileDefaultView="TRUE" Type="HTML" DisplayName="All Documents" Url="{site}/SiteDesignPreviewImages/Forms/AllItems.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="/_layouts/15/images/dlicon.png?rev=47">
+                            <Query>
+                                <OrderBy>
+                                    <FieldRef Name="FileLeafRef"/>
+                                </OrderBy>
+                            </Query>
+                            <ViewFields>
+                                <FieldRef Name="DocIcon"/>
+                                <FieldRef Name="LinkFilename"/>
+                                <FieldRef Name="Modified"/>
+                                <FieldRef Name="Editor"/>
+                            </ViewFields>
+                            <RowLimit Paged="TRUE">30</RowLimit>
+                            <JSLink>clienttemplates.js</JSLink>
+                        </View>
+                    </pnp:Views>
+                    <pnp:Fields>
+                        <Field ID="{d1cff744-ba61-4189-94d6-97d0a9eb4f6a}" Type="Text" DisplayName="Tags" Name="MediaServiceAutoTags" Group="_Hidden" Hidden="FALSE" Sealed="TRUE" ReadOnly="TRUE" ShowInNewForm="FALSE" ShowInDisplayForm="FALSE" ShowInEditForm="FALSE" ShowInListSettings="FALSE" Viewable="FALSE" Json="FALSE" SourceID="{{listid:SiteDesignPreviewImages}}" StaticName="MediaServiceAutoTags" ColName="nvarchar13" RowOrdinal="0"/>
+                        <Field ID="{67aff0cf-8e19-43f2-9987-be89075e1467}" Type="Note" DisplayName="Extracted Text" Name="MediaServiceOCR" Group="_Hidden" Hidden="FALSE" Sealed="TRUE" ReadOnly="TRUE" ShowInNewForm="FALSE" ShowInDisplayForm="FALSE" ShowInEditForm="FALSE" ShowInListSettings="FALSE" Viewable="FALSE" Json="FALSE" SourceID="{{listid:SiteDesignPreviewImages}}" StaticName="MediaServiceOCR" ColName="ntext4" RowOrdinal="0"/>
+                    </pnp:Fields>
+                    <pnp:FieldRefs>
+                        <pnp:FieldRef ID="d307dff3-340f-44a2-9f4b-fbfe1ba07459" Name="_CommentCount" DisplayName="Comment count"/>
+                        <pnp:FieldRef ID="db8d9d6d-dc9a-4fbd-85f3-4a753bfdc58c" Name="_LikeCount" DisplayName="Like count"/>
+                    </pnp:FieldRefs>
+                    <pnp:Security>
+                        <pnp:BreakRoleInheritance CopyRoleAssignments="false" ClearSubscopes="false">
+                            <pnp:RoleAssignment Principal="{associatedmembergroupid}" RoleDefinition="Contribute"/>
+                            <pnp:RoleAssignment Principal="c:0-.f|rolemanager|spo-grid-all-users/{parameter:TenantId}" RoleDefinition="Read"/>
+                        </pnp:BreakRoleInheritance>
+                    </pnp:Security>
+                </pnp:ListInstance>
+            </pnp:Lists>
+            <pnp:ClientSidePages>
+                <pnp:ClientSidePage PromoteAsNewsArticle="false" PromoteAsTemplate="false" Overwrite="true" Layout="SingleWebPartAppPage" Title="Site Design Studio" ThumbnailUrl="" PageName="sds2.aspx">
+                    <pnp:Header Type="Default" LayoutType="FullWidthImage" TextAlignment="Center" ShowTopicHeader="false" ShowPublishDate="false" TopicHeader="" AlternativeText="" Authors="" AuthorByLineId="-1"/>
+                    <pnp:Sections>
+                        <pnp:Section Order="1" Type="OneColumn">
+                            <pnp:Controls>
+                                <pnp:CanvasControl WebPartType="Custom" JsonControlData="{&quot;id&quot;: &quot;e164cc97-dcae-4a4e-a899-67ebb916207e&quot;, &quot;instanceId&quot;: &quot;c2a07e0a-2080-4912-a065-e957377cbc3b&quot;, &quot;title&quot;: &quot;Site Designs Studio&quot;, &quot;description&quot;: &quot;The Site Designs Studio allows SharePoint power users to manage, create and edit Site Designs and Site Scripts&quot;, &quot;dataVersion&quot;: &quot;2.0&quot;, &quot;properties&quot;: {&quot;description&quot;:&quot;Site Designs Studio&quot;}, &quot;serverProcessedContent&quot;: {&quot;htmlStrings&quot;:{},&quot;searchablePlainTexts&quot;:{},&quot;imageSources&quot;:{},&quot;links&quot;:{}}, &quot;dynamicDataPaths&quot;: {}, &quot;dynamicDataValues&quot;: {}}" ControlId="e164cc97-dcae-4a4e-a899-67ebb916207e" Order="1"/>
+                            </pnp:Controls>
+                        </pnp:Section>
+                    </pnp:Sections>
+                </pnp:ClientSidePage>
+            </pnp:ClientSidePages>
+        </pnp:ProvisioningTemplate>
+    </pnp:Templates>
+    <pnp:Sequence ID="MAIN-SEQUENCE">
+        <pnp:SiteCollections>
+            <pnp:SiteCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="pnp:CommunicationSite" ProvisioningId="SDSV2.SITE" Url="https://{parameter:TenantName}.sharepoint.com/sites/{parameter:SitePath}" Title="Site Designs Studio" Owner="{currentuserloginname}" Description="{parameter:Description}" Language="{parameter:lcid}">
+                <pnp:Templates>
+                    <pnp:ProvisioningTemplateReference ID="SITE-DESIGNS-STUDIO-V2-APP"/>
+                </pnp:Templates>
+            </pnp:SiteCollection>
+        </pnp:SiteCollections>
+    </pnp:Sequence>
+</pnp:Provisioning>
