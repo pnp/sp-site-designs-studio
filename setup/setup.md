@@ -1,4 +1,6 @@
-# Install with PnP Powershell
+# Install or upgrade with PnP Powershell
+
+This setup package is designed to either create a fresh new install or upgrade existing setup.
 
 ## Prerequisites
 
@@ -13,7 +15,9 @@ Install-Module SharePointPnPPowershellOnline -Force
 
 ## Run the setup script
 
-The setup script has the following parameters
+The script `setup.ps1` is located [here](./PnPPowershell/setup.ps1)
+
+### Setup script parameters
 
 - tenantName: *REQUIRED* The name of the target tenant (e.g. `contoso` if the tenant URL is https://contoso.sharepoint.com)
 - sitePath: *OPTIONAL* The URL path of the Site Designs Studio site (e.g. `SiteDesignsStudio` in https://contoso.sharepoint.com/sites/SiteDesignsStudio)
@@ -31,3 +35,7 @@ The setup script has the following parameters
 # Using generic credentials registered in Windows Credential Manager
 .\setup.ps1 -tenantName contoso -credentialsName MyCreds
 ```
+
+# Install with Office 365 CLI
+
+__Coming soon__

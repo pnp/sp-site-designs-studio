@@ -1,11 +1,17 @@
 {
-  "name": "site-designs-studio-v-2",
-  "version": "0.0.1",
+  "name": "site-designs-studio-v2",
+  "version": "2.0.1",
   "private": true,
   "main": "lib/index.js",
   "engines": {
     "node": ">=0.10.0"
   },
+  "maintainers": [
+    {
+      "name": "Yannick Plenevaux",
+      "email": "yannick.plenevaux@pvx-solutions.com"
+    }
+  ],
   "scripts": {
     "build": "gulp bundle",
     "clean": "gulp clean",
