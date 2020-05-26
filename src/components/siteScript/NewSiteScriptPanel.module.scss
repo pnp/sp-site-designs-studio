@@ -2,6 +2,7 @@
 @import "../../styling/theme.scss";
 
 .NewSiteScriptPanel {
+
   .row {
     @include ms-Grid-row;
   }
@@ -15,10 +16,22 @@
     @include ms-Grid-col;
     @include ms-sm12;
   }
-
+  .column5 {
+    @include ms-Grid-col;
+    @include ms-lg5;
+  }
+  .column7 {
+    @include ms-Grid-col;
+    @include ms-lg7;
+  }
   .column8 {
     @include ms-Grid-col;
     @include ms-lg8;
+  }
+
+  .column6 {
+    @include ms-Grid-col;
+    @include ms-lg6;
   }
 
   .column4 {
@@ -58,5 +71,19 @@
 
   .panelFooter {
     padding: 15px;
+  }
+
+  .selectedSample {
+    border: 1px solid $ms-themePrimary;
+  }
+
+  .sampleGallery {
+    height: 70vh;
+    overflow-y: auto;
+  }
+
+  .readmeViewer {
+    height: 70vh;
+    overflow-y: auto;
   }
 }

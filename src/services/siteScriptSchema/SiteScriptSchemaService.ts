@@ -1,4 +1,4 @@
-import { get } from '@microsoft/sp-lodash-subset';
+import { get, find } from '@microsoft/sp-lodash-subset';
 import { ISiteScriptAction, ISiteScriptContent } from '../../models/ISiteScript';
 import DefaultSchema from '../../schema/schema';
 import { ServiceScope, ServiceKey } from '@microsoft/sp-core-library';
@@ -257,7 +257,12 @@ export class SiteScriptSchemaService implements ISiteScriptSchemaService {
         // Add default values for required properties of the action
         if (actionSchema && actionSchema.properties) {
             Object.keys(actionSchema.properties)
-                .filter((p) => p != 'verb' && (p == 'subaction' || !actionSchema.required || actionSchema.required.indexOf(p) >= 0))
+                .filter((p) => p != 'verb' && (p == 'subaction'
+                    || !actionSchema.required
+                    || actionSchema.required.indexOf(p) >= 0)
+                    // Exclusive required properties are not preset
+                    // || (actionSchema.anyOf && find(actionSchema.anyOf, s => s.required && s.required.indexOf(p) >= 0))
+                    )
                 .forEach((p) => (newAction[p] = this._getPropertyDefaultValueFromSchema(actionSchema, p)));
         }
 
@@ -313,14 +318,14 @@ export class SiteScriptSchemaService implements ISiteScriptSchemaService {
     public getActionTitle(action: ISiteScriptAction, parentAction: ISiteScriptAction): string {
         return this.getActionTitleByVerb(action.verb, parentAction && parentAction.verb);
     }
-    
+
     public getActionTitleByVerb(actionVerb: string, parentActionVerb: string): string {
         let actionSchema = parentActionVerb
             ? this.getSubActionSchemaByVerbs(parentActionVerb, actionVerb)
             : this.getActionSchemaByVerb(actionVerb);
         return actionSchema.title;
     }
-    
+
     public getActionDescription(action: ISiteScriptAction, parentAction: ISiteScriptAction): string {
         return this.getActionDescriptionByVerb(action.verb, parentAction && parentAction.verb);
     }
@@ -332,7 +337,7 @@ export class SiteScriptSchemaService implements ISiteScriptSchemaService {
         return actionSchema.description;
     }
 
-    public getSubActionSchemaByVerbs(parentActionVerb: string, subActionVerb: string): any {
+    public getSubActionSchemaByVerbs(parentActionVerb: string, subActionVerb: string): IPropertySchema {
         if (!this.isConfigured) {
             throw new Error(
                 'The Schema Service is not properly configured. Make sure the configure() method has been called.'
@@ -352,7 +357,7 @@ export class SiteScriptSchemaService implements ISiteScriptSchemaService {
         return availableSubActionSchemas[subActionSchemaKey];
     }
 
-    public getSubActionSchema(parentAction: ISiteScriptAction, subAction: ISiteScriptAction): any {
+    public getSubActionSchema(parentAction: ISiteScriptAction, subAction: ISiteScriptAction): IPropertySchema {
         return this.getSubActionSchemaByVerbs(parentAction.verb, subAction.verb);
     }
 
@@ -435,7 +440,7 @@ export class SiteScriptSchemaService implements ISiteScriptSchemaService {
             }
             : {
                 property: actionSchema.properties[p].title,
-                value: action[p]
+                value: actionSchema.properties[p].type === "object" ? "Complex object" : action[p]
             }));
     }
 

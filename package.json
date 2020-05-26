@@ -30,6 +30,7 @@
     "ajv": "~5.2.2",
     "file-saver": "^2.0.2",
     "jszip": "^3.3.0",
+    "markdown-it": "^11.0.0",
     "office-ui-fabric-react": "6.189.2",
     "react": "16.8.5",
     "react-dom": "16.8.5",

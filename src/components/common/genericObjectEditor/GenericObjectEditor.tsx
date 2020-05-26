@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { Dropdown, TextField, Toggle, IconButton, Stack, Label, IDropdownOption } from 'office-ui-fabric-react';
+import { Dropdown, TextField, Toggle, IconButton, Stack, Label, IDropdownOption, Icon, MessageBar, MessageBarType } from 'office-ui-fabric-react';
 import { IPropertySchema, IObjectSchema } from '../../../models/IPropertySchema';
 import { useConstCallback } from '@uifabric/react-hooks';
 
@@ -99,11 +99,15 @@ export function PropertyEditor(props: IPropertyEditorProps) {
                         onObjectChanged={onChange} />
                 </>;
             case 'object': // TODO If object is a simple dictionary (key/non-complex object values) => Display a custom control
-                return <GenericObjectEditor
-                    object={value}
-                    schema={schema}
-                    onObjectChanged={onChange}
-                />;
+                // return <GenericObjectEditor
+                //     object={value}
+                //     schema={schema}
+                //     onObjectChanged={onChange}
+                // />;
+                return <div>
+                    <Label>{label}</Label>
+                    <MessageBar messageBarType={MessageBarType.info}>{`This value of this property must be a complex object. Please use code editor to edit it`}</MessageBar>
+                </div>;
             case 'number':
                 return (
                     <TextField
@@ -152,7 +156,7 @@ export function GenericArrayEditor(arrayEditorProps: IGenericObjectEditorProps) 
     });
 
     const onAdded = (() => {
-        arrayEditorProps.onObjectChanged([...(arrayEditorProps.object||[]), getDefaulValueFromSchema(arrayEditorProps.schema)]);
+        arrayEditorProps.onObjectChanged([...(arrayEditorProps.object || []), getDefaulValueFromSchema(arrayEditorProps.schema)]);
     });
 
     const onUpdated = ((index, newValue) => {

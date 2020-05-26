@@ -6,15 +6,14 @@ import { useAppContext } from "../../app/App";
 import { IApplicationState } from "../../app/ApplicationState";
 import { ISiteScript, ISiteScriptContent } from "../../models/ISiteScript";
 import { SiteScriptSchemaServiceKey } from "../../services/siteScriptSchema/SiteScriptSchemaService";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Panel, PanelType } from "office-ui-fabric-react/lib/Panel";
 import { SiteDesignsServiceKey, IGetSiteScriptFromWebOptions, IGetSiteScriptFromExistingResourceResult } from "../../services/siteDesigns/SiteDesignsService";
-import { TextField, PrimaryButton, Stack, Toggle, CompoundButton, DefaultButton, DocumentCard, Icon, DocumentCardDetails, DocumentCardTitle, DocumentCardType, ISize } from "office-ui-fabric-react";
+import { TextField, PrimaryButton, Stack, Toggle, CompoundButton, DefaultButton, DocumentCard, Icon, DocumentCardDetails, DocumentCardTitle, DocumentCardType, ISize, MessageBarType } from "office-ui-fabric-react";
 import { SitePicker } from "../common/sitePicker/SitePicker";
 import { ListPicker } from "../common/listPicker/ListPicker";
-import { ISampleItem } from "../../models/ISampleItem";
-import * as PnPSampleRepository from "../../assets/PnPSamplesRepository.json";
-import { GridLayout } from "@pnp/spfx-controls-react/lib/GridLayout";
+import { SiteScriptSamplePicker } from "./SiteScriptSamplePicker";
+import { ISiteScriptSample } from "../../models/ISiteScriptSample";
 
 export interface INewSiteScriptPanelProps {
     isOpen: boolean;
@@ -42,13 +41,10 @@ export const NewSiteScriptPanel = (props: INewSiteScriptPanelProps) => {
     // Get services instances
     const siteScriptSchemaService = appContext.serviceScope.consume(SiteScriptSchemaServiceKey);
     const siteDesignsService = appContext.serviceScope.consume(SiteDesignsServiceKey);
-    const httpClient = appContext.serviceScope.consume(HttpClient.serviceKey);
     const [needsArguments, setNeedsArguments] = useState<boolean>(false);
     const [creationArgs, setCreationArgs] = useState<ICreateArgs>({ from: "BLANK" });
     const [fromWebArgs, setFromWebArgs] = useState<IGetSiteScriptFromWebOptions>(getDefaultFromWebArgs());
-    const [availableSamples, setAvailableSamples] = useState<ISampleItem[]>([]);
-    const [selectedSample, setSelectedSample] = useState<ISampleItem>(null);
-    const [previewedSample, setPreviewedSample] = useState<ISampleItem>(null);
+    const [selectedSample, setSelectedSample] = useState<ISiteScriptSample>(null);
 
     useEffect(() => {
         setCreationArgs({ from: "BLANK" });
@@ -79,7 +75,22 @@ export const NewSiteScriptPanel = (props: INewSiteScriptPanelProps) => {
                     newSiteScriptContent = fromExistingResult.JSON;
                     break;
                 case "SAMPLE":
-                    newSiteScriptContent = await httpClient.get(selectedSample.contentUrl, HttpClient.configurations.v1).then(r => r.json());
+                    if (selectedSample) {
+                        try {
+                            const jsonWithIgnoredComments = selectedSample.jsonContent.replace(/\/\*(.*)\*\//g,'');
+                            newSiteScriptContent = JSON.parse(jsonWithIgnoredComments);
+                        } catch (error) {
+                            action("SET_USER_MESSAGE", {
+                                userMessage: {
+                                    message: "The JSON of this site script sample is unfortunately invalid... Please reach out to the maintainer to report this issue",
+                                    messageType: MessageBarType.error
+                                }
+                            });
+                        }
+
+                    } else {
+                        console.error("The sample JSON is not defined.");
+                    }
                     break;
             }
 
@@ -110,8 +121,6 @@ export const NewSiteScriptPanel = (props: INewSiteScriptPanelProps) => {
                 break;
             case "SAMPLE":
                 setNeedsArguments(true);
-                setAvailableSamples(PnPSampleRepository.samplesIndex);
-
                 break;
         }
     };
@@ -173,47 +182,10 @@ export const NewSiteScriptPanel = (props: INewSiteScriptPanelProps) => {
         </Stack>;
     };
 
-    const renderSampleItem = (sample: ISampleItem, finalSize: ISize, isCompact: boolean): JSX.Element => {
-
-        return <div
-            data-is-focusable={true}
-            role="listitem"
-            aria-label={sample.title}
-        >
-            <DocumentCard
-                onMouseEnter={_ => setPreviewedSample(sample)}
-                type={isCompact ? DocumentCardType.compact : DocumentCardType.normal}
-                onClick={(ev: React.SyntheticEvent<HTMLElement>) => setSelectedSample(sample)}>
-                <div className={styles.iconBox}>
-                    <div className={styles.icon}>
-                        <Icon iconName="Script" />
-                    </div>
-                </div>
-                <DocumentCardDetails>
-                    <DocumentCardTitle
-                        title={sample.title}
-                        shouldTruncate={true}
-                    />
-                </DocumentCardDetails>
-            </DocumentCard>
-        </div>;
-    };
-
-
     const renderSamplePicker = () => {
-        return <div className={styles.row}>
-            <div className={`${styles.column} ${styles.column8}`}>
-                <GridLayout
-                    ariaLabel="List of Site Scripts samples."
-                    items={availableSamples}
-                    onRenderGridItem={renderSampleItem}
-                />
-            </div>
-            <div className={`${styles.column} ${styles.column8}`}>
-                <iframe src={previewedSample && previewedSample.readmeUrl} height={200} />
-                <pre>{previewedSample && previewedSample.description}</pre>
-            </div>
-        </div>;
+        return <SiteScriptSamplePicker
+            selectedSample={selectedSample}
+            onSelectedSample={setSelectedSample} />;
     };
 
     const renderArgumentsForm = () => {
@@ -234,7 +206,16 @@ export const NewSiteScriptPanel = (props: INewSiteScriptPanelProps) => {
     };
 
     const validateArguments = () => {
-        return true;
+        if (!creationArgs) {
+            return false;
+        }
+
+        switch (creationArgs.from) {
+            case "SAMPLE":
+                return !!(selectedSample && selectedSample.jsonContent);
+            default:
+                return true;
+        }
     };
 
     const getPanelHeaderText = () => {
@@ -254,7 +235,7 @@ export const NewSiteScriptPanel = (props: INewSiteScriptPanelProps) => {
         }
     };
 
-    const panelType = creationArgs.from == "SAMPLE" ? PanelType.large : PanelType.smallFixedFar;
+    const panelType = creationArgs.from == "SAMPLE" ? PanelType.extraLarge : PanelType.smallFixedFar;
     return <Panel type={panelType}
         headerText={getPanelHeaderText()}
         isOpen={props.isOpen}
