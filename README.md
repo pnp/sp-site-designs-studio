@@ -8,7 +8,7 @@ It is designed to be used as an entire solution on a tenant to provision the cus
 The solution is shipped as an application hosted in its own site collection.
 It can be installed using a setup PowerShell script (it requires PnP PowerShell to be installed)
 
-The setup guide is [here](./setup/PnPPowershell/setup.md)
+The setup guide is [here](./setup/setup.md)
 
 > A setup script using Office 365 CLI will be released as well soon
 
