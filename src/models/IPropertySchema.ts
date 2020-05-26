@@ -5,6 +5,7 @@ export interface IPropertySchema {
     description?: string;
     properties?: { [property: string]: IPropertySchema };
     required?: string[];
+    anyOf?: IPropertySchema[];
     items?: IPropertySchema;
 }
 

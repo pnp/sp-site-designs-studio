@@ -1,16 +1,19 @@
 import * as React from "react";
+import { HttpClient } from "@microsoft/sp-http";
 import { ActionType, IEditSiteScriptActionArgs } from "../../app/IApplicationAction";
 import styles from "./NewSiteScriptPanel.module.scss";
 import { useAppContext } from "../../app/App";
 import { IApplicationState } from "../../app/ApplicationState";
 import { ISiteScript, ISiteScriptContent } from "../../models/ISiteScript";
 import { SiteScriptSchemaServiceKey } from "../../services/siteScriptSchema/SiteScriptSchemaService";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Panel, PanelType } from "office-ui-fabric-react/lib/Panel";
 import { SiteDesignsServiceKey, IGetSiteScriptFromWebOptions, IGetSiteScriptFromExistingResourceResult } from "../../services/siteDesigns/SiteDesignsService";
-import { TextField, PrimaryButton, Stack, Toggle, CompoundButton, DefaultButton } from "office-ui-fabric-react";
+import { TextField, PrimaryButton, Stack, Toggle, CompoundButton, DefaultButton, DocumentCard, Icon, DocumentCardDetails, DocumentCardTitle, DocumentCardType, ISize, MessageBarType } from "office-ui-fabric-react";
 import { SitePicker } from "../common/sitePicker/SitePicker";
 import { ListPicker } from "../common/listPicker/ListPicker";
+import { SiteScriptSamplePicker } from "./SiteScriptSamplePicker";
+import { ISiteScriptSample } from "../../models/ISiteScriptSample";
 
 export interface INewSiteScriptPanelProps {
     isOpen: boolean;
@@ -18,7 +21,7 @@ export interface INewSiteScriptPanelProps {
 }
 
 interface ICreateArgs {
-    from: "BLANK" | "WEB" | "LIST";
+    from: "BLANK" | "WEB" | "LIST" | "SAMPLE";
     listUrl?: string;
     webUrl?: string;
 }
@@ -41,6 +44,7 @@ export const NewSiteScriptPanel = (props: INewSiteScriptPanelProps) => {
     const [needsArguments, setNeedsArguments] = useState<boolean>(false);
     const [creationArgs, setCreationArgs] = useState<ICreateArgs>({ from: "BLANK" });
     const [fromWebArgs, setFromWebArgs] = useState<IGetSiteScriptFromWebOptions>(getDefaultFromWebArgs());
+    const [selectedSample, setSelectedSample] = useState<ISiteScriptSample>(null);
 
     useEffect(() => {
         setCreationArgs({ from: "BLANK" });
@@ -70,6 +74,24 @@ export const NewSiteScriptPanel = (props: INewSiteScriptPanelProps) => {
                     fromExistingResult = await siteDesignsService.getSiteScriptFromList(creationArgs.listUrl);
                     newSiteScriptContent = fromExistingResult.JSON;
                     break;
+                case "SAMPLE":
+                    if (selectedSample) {
+                        try {
+                            const jsonWithIgnoredComments = selectedSample.jsonContent.replace(/\/\*(.*)\*\//g,'');
+                            newSiteScriptContent = JSON.parse(jsonWithIgnoredComments);
+                        } catch (error) {
+                            action("SET_USER_MESSAGE", {
+                                userMessage: {
+                                    message: "The JSON of this site script sample is unfortunately invalid... Please reach out to the maintainer to report this issue",
+                                    messageType: MessageBarType.error
+                                }
+                            });
+                        }
+
+                    } else {
+                        console.error("The sample JSON is not defined.");
+                    }
+                    break;
             }
 
             const siteScript: ISiteScript = {
@@ -95,6 +117,9 @@ export const NewSiteScriptPanel = (props: INewSiteScriptPanelProps) => {
                 setNeedsArguments(true);
                 break;
             case "WEB":
+                setNeedsArguments(true);
+                break;
+            case "SAMPLE":
                 setNeedsArguments(true);
                 break;
         }
@@ -157,20 +182,40 @@ export const NewSiteScriptPanel = (props: INewSiteScriptPanelProps) => {
         </Stack>;
     };
 
+    const renderSamplePicker = () => {
+        return <SiteScriptSamplePicker
+            selectedSample={selectedSample}
+            onSelectedSample={setSelectedSample} />;
+    };
+
     const renderArgumentsForm = () => {
         if (!needsArguments) {
             return null;
         }
 
-        if (creationArgs.from == "LIST") {
-            return renderFromListArgumentsForm();
-        } else if (creationArgs.from == "WEB") {
-            return renderFromWebArgumentsForm();
+        switch (creationArgs.from) {
+            case "LIST":
+                return renderFromListArgumentsForm();
+            case "WEB":
+                return renderFromWebArgumentsForm();
+            case "SAMPLE":
+                return renderSamplePicker();
+            default:
+                return null;
         }
     };
 
     const validateArguments = () => {
-        return true;
+        if (!creationArgs) {
+            return false;
+        }
+
+        switch (creationArgs.from) {
+            case "SAMPLE":
+                return !!(selectedSample && selectedSample.jsonContent);
+            default:
+                return true;
+        }
     };
 
     const getPanelHeaderText = () => {
@@ -183,12 +228,15 @@ export const NewSiteScriptPanel = (props: INewSiteScriptPanelProps) => {
                 return "Add a new Site Script from existing list";
             case "WEB":
                 return "Add a new Site Script from existing site";
+            case "SAMPLE":
+                return "Add a new Site Script from samples";
             default:
                 return "";
         }
     };
 
-    return <Panel type={PanelType.smallFixedFar}
+    const panelType = creationArgs.from == "SAMPLE" ? PanelType.extraLarge : PanelType.smallFixedFar;
+    return <Panel type={panelType}
         headerText={getPanelHeaderText()}
         isOpen={props.isOpen}
         onDismiss={onCancel}
@@ -217,6 +265,12 @@ export const NewSiteScriptPanel = (props: INewSiteScriptPanelProps) => {
                     text="From List"
                     secondaryText="Create a new Site Script from an existing list"
                     onClick={() => onChoiceClick({ from: "LIST" })}
+                />
+                <CompoundButton
+                    iconProps={{ iconName: "ProductCatalog" }}
+                    text="From Sample"
+                    secondaryText="Create a new Site Script from a sample"
+                    onClick={() => onChoiceClick({ from: "SAMPLE" })}
                 />
             </Stack>}
             {renderArgumentsForm()}

@@ -257,6 +257,15 @@ export default {
 							'The internal name of the field to add'
 						),
 						type: 'string'
+					},
+					addToDefaultView: {
+						title: getPropertyTitle('internalName', 'createSPList_addToDefaultView', 'Add to default view'),
+						description: getPropertyDescription(
+							'internalName',
+							'createSPList_addToDefaultView',
+							'Add the column to the default view of the list'
+						),
+						type: 'string'
 					}
 				},
 				required: ['verb', 'internalName'],
@@ -942,8 +951,298 @@ export default {
 					),
 					type: 'string'
 				}
+				,
+				themeJson: {
+					title: getPropertyTitle('themeJson', 'applyTheme', "Theme's JSON"),
+					description: getPropertyDescription(
+						'themeJson',
+						'applyTheme',
+						'The JSON describing the theme'
+					),
+					type: 'object',
+					required: [
+						"version",
+						"isInverted",
+						"palette"
+					],
+					properties: {
+						"version": {
+							"type": "integer",
+							"title": "The version schema",
+						},
+						"isInverted": {
+							"type": "boolean",
+							"title": "The isInverted schema",
+						},
+						"palette": {
+							"type": "object",
+							"title": "The palette schema",
+							"description": "An explanation about the purpose of this instance.",
+							"properties": {
+								"themePrimary": {
+									"type": "string",
+									"title": "The themePrimary schema",
+									"description": "An explanation about the purpose of this instance.",
+									"examples": [
+										"#0078d4"
+									]
+								},
+								"themeLighterAlt": {
+									"$id": "#/properties/palette/properties/themeLighterAlt",
+									"type": "string",
+									"title": "The themeLighterAlt schema",
+									"description": "An explanation about the purpose of this instance.",
+									"default": "",
+									"examples": [
+										"#eff6fc"
+									]
+								},
+								"themeLighter": {
+									"type": "string",
+									"title": "The themeLighter schema",
+									"description": "An explanation about the purpose of this instance.",
+									"default": "",
+									"examples": [
+										"#deecf9"
+									]
+								},
+								"themeLight": {
+									"type": "string",
+									"title": "The themeLight schema",
+									"description": "An explanation about the purpose of this instance.",
+									"default": "",
+									"examples": [
+										"#c7e0f4"
+									]
+								},
+								"themeTertiary": {
+									"type": "string",
+									"title": "The themeTertiary schema",
+									"description": "An explanation about the purpose of this instance.",
+									"default": "",
+									"examples": [
+										"#71afe5"
+									]
+								},
+								"themeSecondary": {
+									"type": "string",
+									"title": "The themeSecondary schema",
+									"description": "An explanation about the purpose of this instance.",
+									"default": "",
+									"examples": [
+										"#2b88d8"
+									]
+								},
+								"themeDarkAlt": {
+									"type": "string",
+									"title": "The themeDarkAlt schema",
+									"description": "An explanation about the purpose of this instance.",
+									"default": "",
+									"examples": [
+										"#106ebe"
+									]
+								},
+								"themeDark": {
+									"type": "string",
+									"title": "The themeDark schema",
+									"description": "An explanation about the purpose of this instance.",
+									"default": "",
+									"examples": [
+										"#005a9e"
+									]
+								},
+								"themeDarker": {
+									"type": "string",
+									"title": "The themeDarker schema",
+									"description": "An explanation about the purpose of this instance.",
+									"default": "",
+									"examples": [
+										"#004578"
+									]
+								},
+								"neutralLighterAlt": {
+									"type": "string",
+									"title": "The neutralLighterAlt schema",
+									"description": "An explanation about the purpose of this instance.",
+									"default": "",
+									"examples": [
+										"#f8f8f8"
+									]
+								},
+								"neutralLighter": {
+									"type": "string",
+									"title": "The neutralLighter schema",
+									"description": "An explanation about the purpose of this instance.",
+									"default": "",
+									"examples": [
+										"#f4f4f4"
+									]
+								},
+								"neutralLight": {
+									"type": "string",
+									"title": "The neutralLight schema",
+									"description": "An explanation about the purpose of this instance.",
+									"default": "",
+									"examples": [
+										"#eaeaea"
+									]
+								},
+								"neutralQuaternaryAlt": {
+									"type": "string",
+									"title": "The neutralQuaternaryAlt schema",
+									"description": "An explanation about the purpose of this instance.",
+									"default": "",
+									"examples": [
+										"#dadada"
+									]
+								},
+								"neutralQuaternary": {
+									"type": "string",
+									"title": "The neutralQuaternary schema",
+									"description": "An explanation about the purpose of this instance.",
+									"default": "",
+									"examples": [
+										"#d0d0d0"
+									]
+								},
+								"neutralTertiaryAlt": {
+									"type": "string",
+									"title": "The neutralTertiaryAlt schema",
+									"description": "An explanation about the purpose of this instance.",
+									"default": "",
+									"examples": [
+										"#c8c8c8"
+									]
+								},
+								"neutralTertiary": {
+									"type": "string",
+									"title": "The neutralTertiary schema",
+									"description": "An explanation about the purpose of this instance.",
+									"default": "",
+									"examples": [
+										"#c2c2c2"
+									]
+								},
+								"neutralSecondary": {
+									"type": "string",
+									"title": "The neutralSecondary schema",
+									"description": "An explanation about the purpose of this instance.",
+									"default": "",
+									"examples": [
+										"#858585"
+									]
+								},
+								"neutralPrimaryAlt": {
+									"type": "string",
+									"title": "The neutralPrimaryAlt schema",
+									"description": "An explanation about the purpose of this instance.",
+									"default": "",
+									"examples": [
+										"#4b4b4b"
+									]
+								},
+								"neutralPrimary": {
+									"type": "string",
+									"title": "The neutralPrimary schema",
+									"description": "An explanation about the purpose of this instance.",
+									"default": "",
+									"examples": [
+										"#333"
+									]
+								},
+								"neutralDark": {
+									"type": "string",
+									"title": "The neutralDark schema",
+									"description": "An explanation about the purpose of this instance.",
+									"default": "",
+									"examples": [
+										"#272727"
+									]
+								},
+								"black": {
+									"type": "string",
+									"title": "The black schema",
+									"description": "An explanation about the purpose of this instance.",
+									"default": "",
+									"examples": [
+										"#1d1d1d"
+									]
+								},
+								"white": {
+									"type": "string",
+									"title": "The white schema",
+									"description": "An explanation about the purpose of this instance.",
+									"default": "",
+									"examples": [
+										"#fff"
+									]
+								},
+								"primaryBackground": {
+									"type": "string",
+									"title": "The primaryBackground schema",
+									"description": "An explanation about the purpose of this instance.",
+									"default": "",
+									"examples": [
+										"#fff"
+									]
+								},
+								"primaryText": {
+									"type": "string",
+									"title": "The primaryText schema",
+									"description": "An explanation about the purpose of this instance.",
+									"default": "",
+									"examples": [
+										"#333"
+									]
+								},
+								"bodyBackground": {
+									"type": "string",
+									"title": "The bodyBackground schema",
+									"description": "An explanation about the purpose of this instance.",
+									"default": "",
+									"examples": [
+										"#fff"
+									]
+								},
+								"bodyText": {
+									"type": "string",
+									"title": "The bodyText schema",
+									"description": "An explanation about the purpose of this instance.",
+									"default": "",
+									"examples": [
+										"#333"
+									]
+								},
+								"disabledBackground": {
+									"$id": "#/properties/palette/properties/disabledBackground",
+									"type": "string",
+									"title": "The disabledBackground schema",
+									"description": "An explanation about the purpose of this instance.",
+									"default": "",
+									"examples": [
+										"#f4f4f4"
+									]
+								},
+								"disabledText": {
+									"type": "string",
+									"title": "The disabledText schema",
+									"description": "An explanation about the purpose of this instance.",
+									"default": "",
+									"examples": [
+										"#c8c8c8"
+									]
+								}
+							}
+						}
+					},
+					additionalProperties: false,
+				}
 			},
-			required: ['verb', 'themeName']
+			anyOf: [
+				{ required: ['verb', 'themeName'] },
+				{ required: ['verb', 'themeJson'] }
+			],
+			additionalProperties: false
 		},
 		setSiteBranding: {
 			title: getActionTitle('setSiteBranding', 'Set branding properties'),
@@ -1205,11 +1504,11 @@ export default {
 			},
 			required: ['verb', 'timeZone', 'locale', 'sortOrder', 'hourFormat']
 		},
-		addPrincipalToGroup: {
+		addPrincipalToSPGroup: {
 			type: 'object',
-			title: getActionTitle('addPrincipalToGroup', 'Add Principal to Group'),
+			title: getActionTitle('addPrincipalToSPGroup', 'Add Principal to Group'),
 			description: getActionDescription(
-				'addPrincipalToGroup',
+				'addPrincipalToSPGroup',
 				'Use the addPrincipalToGroup action to manage addition of users and groups to select default SharePoint groups. This action can be used for licensed users, security groups, and Office 365 Groups'
 			),
 			properties: {
@@ -1217,19 +1516,19 @@ export default {
 					enum: ['addPrincipalToGroup']
 				},
 				principal: {
-					title: getPropertyTitle('principal', 'addPrincipalToGroup', 'Principal'),
+					title: getPropertyTitle('principal', 'addPrincipalToSPGroup', 'Principal'),
 					description: getPropertyDescription(
 						'principal',
-						'addPrincipalToGroup',
+						'addPrincipalToSPGroup',
 						'A required parameter to specify the name of the principal (user or group) to add to the SharePoint group'
 					),
 					type: 'string'
 				},
 				group: {
-					title: getPropertyTitle('group', 'addPrincipalToGroup', 'Group'),
+					title: getPropertyTitle('group', 'addPrincipalToSPGroup', 'Group'),
 					description: getPropertyDescription(
 						'group',
-						'addPrincipalToGroup',
+						'addPrincipalToSPGroup',
 						'A required parameter to specify the SharePoint group to add the principal to'
 					),
 					type: 'string'
@@ -1291,7 +1590,7 @@ export default {
 					{ type: 'object', $ref: '#/definitions/activateSPFeature' },
 					{ type: 'object', $ref: '#/definitions/triggerFlow' },
 					{ type: 'object', $ref: '#/definitions/setRegionalSettings' },
-					{ type: 'object', $ref: '#/definitions/addPrincipalToGroup' },
+					{ type: 'object', $ref: '#/definitions/addPrincipalToSPGroup' },
 					{ type: 'object', $ref: '#/definitions/setSiteExternalSharingCapability' },
 					{ type: 'object', $ref: '#/definitions/setSiteBranding' }
 				]
@@ -1305,5 +1604,5 @@ export default {
 			type: 'number'
 		}
 	},
-	required: ['actions', 'bindata', 'version']
+	required: ['actions']
 };

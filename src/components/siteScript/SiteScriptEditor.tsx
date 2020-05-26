@@ -346,8 +346,9 @@ export const SiteScriptEditor = (props: ISiteScriptEditorProps) => {
 
         codeUpdateTimeoutHandle = setTimeout(() => {
             try {
-                if (siteScriptSchemaService.validateSiteScriptJson(updatedCode)) {
-                    const content = JSON.parse(updatedCode) as ISiteScriptContent;
+                const jsonWithIgnoredComments = updatedCode.replace(/\/\*(.*)\*\//g,'');
+                if (siteScriptSchemaService.validateSiteScriptJson(jsonWithIgnoredComments)) {
+                    const content = JSON.parse(jsonWithIgnoredComments) as ISiteScriptContent;
                     dispatchState({ type: "UPDATE_SITE_SCRIPT_CONTENT", content, isValidCode: true, from: "CODE" });
                 } else {
                     dispatchState({ type: "UPDATE_SITE_SCRIPT_CONTENT", content: null, isValidCode: false, from: "CODE" });

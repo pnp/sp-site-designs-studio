@@ -8,6 +8,7 @@ import { hubSitePickerRenderer } from "../components/propertyInputRenderers/HubS
 import { appPickerRenderer } from "../components/propertyInputRenderers/AppPicker";
 import { themePickerRenderer } from "../components/propertyInputRenderers/ThemePicker";
 import { listTemplatePickerRenderer } from "../components/propertyInputRenderers/ListTemplatePicker";
+import { SiteScriptSamplesServiceKey } from "../services/siteScriptSamples/SiteScriptSamplesService";
 
 
 async function configureTestServices(webPartContext: WebPartContext): Promise<ServiceScope> {
@@ -40,11 +41,23 @@ async function configureTestServices(webPartContext: WebPartContext): Promise<Se
 async function configureProdServices(webPartContext: WebPartContext): Promise<ServiceScope> {
     const childScope = webPartContext.serviceScope.startNewChild();
     // TODO Create and configure custom service instances here
+
     childScope.finish();
 
     await new Promise<void>((resolve, reject) => {
         childScope.whenFinished(() => {
             try {
+                const siteScriptSample = childScope.consume(SiteScriptSamplesServiceKey);
+                siteScriptSample["_availableRepositories"] = [
+                    {
+                        key: 'PnP',
+                        owner: 'pnp',
+                        repository: 'sp-dev-site-scripts',
+                        branch: 'master',
+                        samplesFolderPath: 'samples'
+                    }
+                ];
+
                 const siteScriptSchema = childScope.consume(SiteScriptSchemaServiceKey);
                 const siteScriptSchemaConfigPromise = siteScriptSchema.configure();
 
