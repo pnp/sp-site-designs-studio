@@ -1513,7 +1513,7 @@ export default {
 			),
 			properties: {
 				verb: {
-					enum: ['addPrincipalToGroup']
+					enum: ['addPrincipalToSPGroup']
 				},
 				principal: {
 					title: getPropertyTitle('principal', 'addPrincipalToSPGroup', 'Principal'),
