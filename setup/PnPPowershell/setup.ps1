@@ -5,17 +5,13 @@
 param(
     [string] $tenantName,
     [string] $sitePath = "SiteDesignsStudio",
-    [string] $credentialsName = "",
-    [boolean] $useMFA= $false
+    [string] $credentialsName = ""
 )
 
 $url = "https://$tenantName.sharepoint.com"
 if ($credentialName -ne "") {
     Write-Host "Using credentials $credentialsName"
     Connect-PnPOnline $url -Credentials $credentialsName
-} elseif ($useMFA) {
-    Write-Host "Using WebLogin"
-    Connect-PnPOnline $url -UseWebLogin
 } else {
     Connect-PnPOnline $url
 }
