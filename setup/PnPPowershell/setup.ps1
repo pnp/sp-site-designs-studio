@@ -9,7 +9,7 @@ param(
 )
 
 $url = "https://$tenantName.sharepoint.com"
-if ($credentialName -ne "") {
+if ($credentialsName -ne "") {
     Write-Host "Using credentials $credentialsName"
     Connect-PnPOnline $url -Credentials $credentialsName
 } else {

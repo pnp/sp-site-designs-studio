@@ -85,7 +85,7 @@
     </pnp:Templates>
     <pnp:Sequence ID="MAIN-SEQUENCE">
         <pnp:SiteCollections>
-            <pnp:SiteCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="pnp:CommunicationSite" ProvisioningId="SDSV2.SITE" Url="https://{parameter:TenantName}.sharepoint.com/sites/{parameter:SitePath}" Title="Site Designs Studio" Owner="{currentuserloginname}" Description="{parameter:Description}" Language="{parameter:lcid}">
+            <pnp:SiteCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="pnp:CommunicationSite" ProvisioningId="SDSV2.SITE" Url="https://{parameter:TenantName}.sharepoint.com/sites/{parameter:SitePath}" Title="Site Designs Studio" Owner="{currentuserloginname}" Description="This is a special site hosting the Site Designs Studio V2" Language="{parameter:lcid}">
                 <pnp:Templates>
                     <pnp:ProvisioningTemplateReference ID="SITE-DESIGNS-STUDIO-V2-APP"/>
                 </pnp:Templates>
