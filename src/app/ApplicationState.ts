@@ -1,10 +1,10 @@
 import { ISiteDesign, ISiteDesignWithGrantedRights } from "../models/ISiteDesign";
 import { IBaseAppState } from "./App";
 import { ActionType } from "./IApplicationAction";
-import { WebPartContext } from "@microsoft/sp-webpart-base";
 import { ISiteScript } from "../models/ISiteScript";
 import { ServiceScope } from "@microsoft/sp-core-library";
 import { MessageBarType } from "office-ui-fabric-react";
+import { BaseComponentContext } from "@microsoft/sp-component-base";
 
 export type Page = "Home" | "SiteDesignsList" | "SiteDesignEdition" | "SiteScriptsList" | "SiteScriptEdition";
 
@@ -19,7 +19,7 @@ export interface IApplicationState extends IBaseAppState<ActionType> {
     currentSiteScript: ISiteScript;
     allAvailableSiteDesigns: ISiteDesign[];
     allAvailableSiteScripts: ISiteScript[];
-    componentContext: WebPartContext;
+    componentContext: BaseComponentContext;
     serviceScope: ServiceScope;
     isLoading: boolean;
     userMessage: IUserMessage;

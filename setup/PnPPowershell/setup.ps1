@@ -11,10 +11,11 @@ param(
 $url = "https://$tenantName.sharepoint.com"
 if ($credentialsName -ne "") {
     Write-Host "Using credentials $credentialsName"
-    Connect-PnPOnline $url -Credentials $credentialsName
+    Connect-PnPOnline -Url $url -Credentials $credentialsName
 } else {
-    Connect-PnPOnline $url
+    Connect-PnPOnline -Url $url -UseWebLogin
 }
 
 $tenantId = Get-PnPTenantId
-Apply-PnPTenantTemplate -Path .\SiteDesignsStudio.pnp -Parameter @{TenantName=$tenantName; SitePath=$sitePath; TenantId=$tenantId}
+Register-PnPManagementShellAccess -ShowConsentUrl -TenantName "$tenantName.sharepoint.com"
+Invoke-PnPTenantTemplate -Path .\SiteDesignsStudio.pnp -Parameter @{TenantName=$tenantName; SitePath=$sitePath; TenantId=$tenantId}

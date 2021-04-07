@@ -130,7 +130,7 @@ export const SiteScriptSamplePicker = (props: ISiteScriptSamplePickerProps) => {
         </div>}
         {!isLoadingAllSamples && <div className={`${selectedSampleKey ? styles.column6 : styles.column}`}>
             <Stack tokens={{ childrenGap: 3 }}>
-                <SearchBox underlined value={searchCriteria} onChange={setSearchCriteria} placeholder={"Search a sample..."} />
+                <SearchBox underlined value={searchCriteria} onChange={(e, v)=> setSearchCriteria(v)} placeholder={"Search a sample..."} />
                 <div className={styles.sampleGallery}>
                     <GridLayout
                         ariaLabel="List of Site Scripts samples."
