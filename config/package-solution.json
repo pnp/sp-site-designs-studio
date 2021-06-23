@@ -3,10 +3,17 @@
   "solution": {
     "name": "Site Designs Studio v2",
     "id": "83580513-8ac2-4fdc-89f5-5f44e4364309",
-    "version": "2.0.2.0",
+    "version": "2.0.3.0",
     "includeClientSideAssets": true,
     "isDomainIsolated": false,
     "skipFeatureDeployment": true,
+    "developer": {
+      "name": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "websiteUrl": "",
+      "mpnId": "000000"
+    },
     "webApiPermissionRequests": [
       {
         "resource": "Microsoft Graph",

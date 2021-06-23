@@ -8,7 +8,7 @@ import { ActionType, ISetAllAvailableSiteScripts, IGoToActionArgs, ISetUserMessa
 import { SiteScriptDesigner } from "./SiteScriptDesigner";
 import { SiteDesignsServiceKey } from "../../services/siteDesigns/SiteDesignsService";
 import { ISiteScript, ISiteScriptContent } from "../../models/ISiteScript";
-import CodeEditor, { monaco } from "@monaco-editor/react";
+import CodeEditor, {  loader, Monaco } from "@monaco-editor/react";
 import { SiteScriptSchemaServiceKey } from "../../services/siteScriptSchema/SiteScriptSchemaService";
 import { Confirm } from "../common/confirm/Confirm";
 import { toJSON } from "../../utils/jsonUtils";
@@ -360,11 +360,11 @@ export const SiteScriptEditor = (props: ISiteScriptEditorProps) => {
         }, 500);
     };
 
-    const editorDidMount = (_, editor) => {
+    const onMount = (editor, monaco: Monaco) => {
 
         const schema = siteScriptSchemaService.getSiteScriptSchema();
         codeEditorRef.current = editor;
-        monaco.init().then(monacoApi => {
+        loader.init().then(monacoApi => {
             monacoApi.languages.json.jsonDefaults.setDiagnosticsOptions({
                 schemas: [{
                     uri: 'schema.json',
@@ -511,7 +511,7 @@ export const SiteScriptEditor = (props: ISiteScriptEditorProps) => {
                                 }
                             }}
                             value={toJSON(siteScriptContent)}
-                            editorDidMount={editorDidMount}
+                            onMount={onMount}
                         />
                     </div>
                 </div>

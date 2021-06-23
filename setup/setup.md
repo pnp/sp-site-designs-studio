@@ -9,8 +9,13 @@ A recent version of PnP Powershell is needed to be installed
 
 To install the latest version of PnP PowerShell, the following command can be used
 
+First make sure to uninstall any edition of PnP PowerShell that runs on the Windows PowerShell version (the one with the blue background).
+
 ```powershell
-Install-Module SharePointPnPPowershellOnline -Force
+Uninstall-Module -Name "SharePointPnPPowerShellOnline" -AllVersions -Force
+```
+```powershell
+Install-Module -Name "PnP.PowerShell" -Force
 ```
 
 ## Run the setup script
