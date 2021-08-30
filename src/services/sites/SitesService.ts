@@ -26,11 +26,13 @@ class SitesService implements ISitesService {
 
     public async getSiteByNameOrUrl(nameOrUrl: string): Promise<ISPSite[]> {
         const searchResults: SearchResults = await sp.search(<ISearchQuery>{
-            Querytext: `contentclass:STS_Site AND (Title:${nameOrUrl}* OR SPSiteUrl:*${nameOrUrl}*)`,
+            Querytext: `contentclass:STS_Site AND ${nameOrUrl}*`,
             SelectProperties: ["Title", "SiteId", "SPSiteUrl", "WebTemplate"],
             RowLimit: 500,
             TrimDuplicates: false
         });
+
+        console.log(searchResults);
 
         return searchResults.PrimarySearchResults.map((value) => ({
             // NOTE SiteId is not in the interface => PR PnP JS
@@ -54,7 +56,7 @@ class SitesService implements ISitesService {
             };
         });
     }
-    
+
 }
 
 export const SitesServiceKey = ServiceKey.create<ISitesService>('YPCODE:SDSv2:SitesService', SitesService);

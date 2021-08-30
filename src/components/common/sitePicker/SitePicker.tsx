@@ -50,7 +50,7 @@ export const SitePicker = (props: ISitePickerProps) => {
     };
 
     const onSelectedTagChanged = (tag: ITag) => {
-        onSelectedSiteChanged({ title: tag.name, url: tag.key, id: null });
+        onSelectedSiteChanged({ title: tag.name, url: tag.key as string, id: null });
         return tag;
     };
 

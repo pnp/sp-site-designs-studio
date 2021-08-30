@@ -1,9 +1,9 @@
 {
-  "extends": "./node_modules/@microsoft/rush-stack-compiler-3.3/includes/tsconfig-web.json",
+  "extends": "./node_modules/@microsoft/rush-stack-compiler-3.9/includes/tsconfig-web.json",
   "compilerOptions": {
-    "target": "es5",
+    "target": "es2018",
     "forceConsistentCasingInFileNames": true,
-    "module": "esnext",
+    "module": "ESNext",
     "moduleResolution": "node",
     "jsx": "react",
     "declaration": true,
@@ -14,7 +14,8 @@
     "inlineSources": false,
     "strictNullChecks": false,
     "noUnusedLocals": false,
-    "resolveJsonModule": true,
+    "resolveJsonModule":true,
+    "allowSyntheticDefaultImports": true,
     "typeRoots": [
       "./node_modules/@types",
       "./node_modules/@microsoft"
@@ -25,9 +26,26 @@
     ],
     "lib": [
       "es5",
+      "es6",
       "dom",
-      "es2015.collection"
-    ]
+      "es2015.collection",
+      "ES2015.Promise"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@services/*": [
+        "src/services/*"
+      ],
+      "@helpers/*": [
+        "src/helpers/*"
+      ],
+      "@models/*": [
+        "src/models/*"
+      ],
+      "@src/*": [
+        "src/*"
+      ]
+    }
   },
   "include": [
     "src/**/*.ts"

@@ -201,11 +201,11 @@ export const SiteDesignEditor = (props: ISiteDesignEditorProps) => {
         setEditingSiteDesign({ ...editingSiteDesign, SiteScriptIds: reorderedSiteScriptIds });
     };
 
-    const onPreviewImageChanged = async (previewImageFile: IFilePickerResult) => {
-        if (previewImageFile.fileAbsoluteUrl) {
-            setEditingSiteDesign({ ...editingSiteDesign, PreviewImageUrl: previewImageFile.fileAbsoluteUrl });
+    const onPreviewImageChanged = async (previewImageFile: IFilePickerResult[]) => {
+        if (previewImageFile[0].fileAbsoluteUrl) {
+            setEditingSiteDesign({ ...editingSiteDesign, PreviewImageUrl: previewImageFile[0].fileAbsoluteUrl });
         } else {
-            const file: File = await previewImageFile.downloadFileContent();
+            const file: File = await previewImageFile[0].downloadFileContent();
             // Will add the file in a "SiteDesignsPreviewImages" library in the current site
             const serverUrl = `${document.location.protocol}//${document.location.host}`;
             const uploadedFileUrl = await siteDesignPreviewImageService.uploadPreviewImageToCurrentSite(file);
