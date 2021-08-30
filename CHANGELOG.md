@@ -1,6 +1,9 @@
 
 # Site Designs Studio V2 Changelog
 
+## v2.0.4
+- update : spfx 1.12.1
+- new : spfx-fast-derve
 ## v2.0.1
 
 - New Feature - Create a site script from PnP sample

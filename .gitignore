@@ -9,9 +9,10 @@ node_modules
 # Build generated files
 dist
 lib
-solution
+debug
+release
 temp
-
+!/sharepoint/solution/*.sppkg
 # Coverage directory used by tools like istanbul
 coverage
 
@@ -29,3 +30,4 @@ obj
 
 # Styles Generated Code
 *.scss.ts
+*.scss.d.ts
