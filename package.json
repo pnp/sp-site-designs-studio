@@ -33,7 +33,7 @@
     "@types/react-dom": "16.8.3",
     "@types/webpack-env": "1.13.1",
     "@uifabric/react-hooks": "^7.1.2",
-    "ajv": "~5.2.2",
+    "ajv": "~6.12.3",
     "file-saver": "^2.0.2",
     "jszip": "^3.3.0",
     "markdown-it": "^11.0.0",
