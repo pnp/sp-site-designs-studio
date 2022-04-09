@@ -18,6 +18,12 @@ Write-Host "SPFx solution package built." -ForegroundColor Green
 $pnpPackageFileName = "SiteDesignsStudio.pnp"
 $pnpTemplateXmlFileName = "sdsv2-template.xml"
 
+if ((test-path "../PnPPowershell/$pnpPackageFileName")) {
+    Remove-Item "../PnPPowershell/$pnpPackageFileName" -Force| Out-Null
+}
+
+Read-Host "STOP"
+
 Write-Host "Building PnP setup package $pnpPackageFileName..." -ForegroundColor Yellow
 # Copy the sppkg to /package folder
 Copy-Item ../../sharepoint/solution/site-designs-studio-v2.sppkg ../package/site-designs-studio-v2.sppkg
@@ -26,7 +32,7 @@ Copy-Item ../../sharepoint/solution/site-designs-studio-v2.sppkg ../package/site
 if (!(test-path "../PnPPowershell/debug/package")) {
     mkdir ../PnPPowershell/debug/package | Out-Null
 }
-Copy-Item ../../sharepoint/solution/site-designs-studio-v2.sppkg ../PnPPowershell/debug/package/site-designs-studio-v2.sppkg | Out-Null
+Copy-Item ../../sharepoint/solution/site-designs-studio-v2.sppkg ../PnPPowershell/debug/package/site-designs-studio-v2.sppkg  | Out-Null
 
 # Rebuild the .pnp file with the latest sppkg and tenant template
 Set-Location ../PnPPowershell/debug/

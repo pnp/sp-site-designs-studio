@@ -52,7 +52,7 @@ export class SiteDesignsService implements ISiteDesignsService {
 		return (this.baseUrl + '//' + relativeUrl).replace(/\/{2,}/, '/');
 	}
 
-	private async _restRequest<TResponse>(url: string, params: any = null): Promise<TResponse> {
+	private async _restRequest<TResponse>(url: string, params: any = {}): Promise<TResponse> {
 		const restUrl = this._getEffectiveUrl(url);
 		const options: ISPHttpClientOptions = {
 			body: JSON.stringify(params),
