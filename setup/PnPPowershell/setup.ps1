@@ -17,4 +17,4 @@ if ($credentialsName -ne "") {
 }
 
 $tenantId = Get-PnPTenantId
-Apply-PnPTenantTemplate -Path .\SiteDesignsStudio.pnp -Parameter @{TenantName=$tenantName; SitePath=$sitePath; TenantId=$tenantId}
+Invoke-PnPTenantTemplate -Path .\SiteDesignsStudio.pnp -Parameter @{TenantName=$tenantName; SitePath=$sitePath; TenantId=$tenantId}
